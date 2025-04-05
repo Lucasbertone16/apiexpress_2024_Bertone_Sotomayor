@@ -76,6 +76,43 @@ Este proyecto es una API construida en Node.js y Express que proporciona acceso 
    - **Ejemplo:** `/api/v1/aire/polucionHistorica?lat=-34.61&lon=-58.38&start=1694803200&end=1694889600`
    - **Descripción:** Obtiene información histórica sobre la contaminación del aire para una ubicación específica y en una franja de tiempo definida. El formato de la fecha está en timestamp Unix (utiliza herramientas como epochconverter.com para convertirlo).
 
+
+### Endpoints de Lucas Bertone e Ignacio Sotomayor
+
+Ya que la Api que utilizamos solo nos daba metodos GET, decidimos realizar metodos propios para modificar la base de datos del proyecto. 
+
+1. ** Obtener todas las ciudades  
+**Ruta:** `GET /ciudades`  
+**Descripción:** Recupera la lista completa de ciudades almacenadas en la base de datos con sus respectivos datos climáticos.  
+**Funcionamiento:**  
+- Ejecuta una consulta SQL para obtener todas las filas de la tabla `clima`.  
+- Retorna un JSON con los datos de las ciudades o un error en caso de fallo.  
+
+2. ** Crear una nueva ciudad  
+**Ruta:** `POST /ciudades`  
+**Descripción:** Agrega una nueva ciudad con información climática a la base de datos.  
+**Funcionamiento:**  
+- Recibe los datos de la ciudad en el cuerpo de la solicitud (`nombreCiudad`, `descripcion`, `temperatura`, etc.).  
+- Verifica que todos los campos obligatorios estén presentes.  
+- Inserta los datos en la tabla `clima` mediante una consulta SQL.  
+- Retorna un mensaje de éxito o error según corresponda.  
+
+3. ** Marcar o desmarcar una ciudad como favorita  
+**Ruta:** `PATCH /ciudades/favorito`  
+**Descripción:** Permite marcar una ciudad como favorita o desmarcarla.  
+**Funcionamiento:**  
+- Recibe el `nombreCiudad` en el cuerpo de la solicitud.  
+- Busca la ciudad en la base de datos para verificar si ya está marcada como favorita (`es_favorita`).  
+- Alterna el estado de `es_favorita` (0 o 1).  
+- Retorna un mensaje indicando el cambio realizado.  
+
+4. ** Eliminar una ciudad  
+**Ruta:** `DELETE /ciudades`  
+**Descripción:** Elimina una ciudad de la base de datos.  
+**Funcionamiento:**  
+- Recibe el `nombreCiudad` en el cuerpo de la solicitud.  
+- Busca y elimina la ciudad de la tabla `clima`.  
+- Retorna un mensaje confirmando la eliminación o un error si la ciudad no existe.  
 ---
 
 
